@@ -56,7 +56,7 @@ class _MobileLayoutScreenState extends ConsumerState<DashboardScreen>
           backgroundColor: appBarColor,
           centerTitle: false,
           title: const Text(
-            'WhatsApp',
+            'Chat App',
             style: TextStyle(
               fontSize: 20,
               color: Colors.grey,

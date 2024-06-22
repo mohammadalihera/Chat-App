@@ -68,7 +68,7 @@ class AuthRepository {
         smsCode: userOTP,
       );
       await auth.signInWithCredential(credential);
-      context.goNamed(RouterConfiguration.userInfoScreen);
+      context.pushReplacementNamed(RouterConfiguration.userInfoScreen);
     } on FirebaseAuthException catch (e) {
       showSnackBar(context: context, content: e.message!);
     }
@@ -102,14 +102,7 @@ class AuthRepository {
       );
 
       await firestore.collection('users').doc(uid).set(user.toMap());
-      context.pushNamed(RouterConfiguration.dashboardScreen);
-      // Navigator.pushAndRemoveUntil(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => const MobileLayoutScreen(),
-      //   ),
-      //   (route) => false,
-      // );
+      context.pushReplacementNamed(RouterConfiguration.dashboardScreen);
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }

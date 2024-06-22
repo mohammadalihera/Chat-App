@@ -28,20 +28,12 @@ class LandingScreen extends StatelessWidget {
             ),
             SizedBox(height: size.height / 9),
             SizedBox(height: size.height / 9),
-            const Padding(
-              padding: EdgeInsets.all(15.0),
-              child: Text(
-                'Read our Privacy Policy. Tap "Agree and continue" to accept the Terms of Service.',
-                style: TextStyle(color: greyColor),
-                textAlign: TextAlign.center,
-              ),
-            ),
             const SizedBox(height: 10),
             SizedBox(
-              width: size.width * 0.75,
+              width: size.width * 0.99,
               child: CustomButton(
-                text: 'AGREE AND CONTINUE',
-                onPressed: () => context.goNamed(RouterConfiguration.loginScreen),
+                text: 'CONTINUE',
+                onPressed: () => context.pushReplacementNamed(RouterConfiguration.loginScreen),
               ),
             ),
           ],
