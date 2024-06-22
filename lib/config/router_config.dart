@@ -1,11 +1,12 @@
-import 'package:chatapp/common/widgets/loader.dart';
-import 'package:chatapp/dashboard_screen.dart';
-import 'package:chatapp/features/auth/controller/auth_controller.dart';
-import 'package:chatapp/features/auth/screens/user_information_screen.dart';
+import 'package:chatapp/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:chatapp/common/widgets/loading_screen.dart';
+import 'package:chatapp/dashboard_screen.dart';
+import 'package:chatapp/features/auth/controller/auth_controller.dart';
+import 'package:chatapp/features/auth/screens/user_information_screen.dart';
 import 'package:chatapp/features/auth/screens/login_screen.dart';
 import 'package:chatapp/features/auth/screens/otp_screen.dart';
 import 'package:chatapp/features/landing/landing_screen.dart';
@@ -22,12 +23,13 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           ref.watch(userDataAuthProvider).when(data: (user) {
             if (user == null) {
               initialScreen = const LandingScreen();
+            } else {
+              initialScreen = const DashboardScreen();
             }
-            initialScreen = const DashboardScreen();
           }, error: (err, trace) {
             initialScreen = const LandingScreen();
           }, loading: () {
-            initialScreen = const Loader();
+            initialScreen = const LoadingScreen();
           });
           return initialScreen;
         },
@@ -67,7 +69,14 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             name: RouterConfiguration.loader,
             path: RouterConfiguration.loader,
             builder: (BuildContext context, GoRouterState state) {
-              return const Loader();
+              return const LoadingScreen();
+            },
+          ),
+          GoRoute(
+            name: RouterConfiguration.selectContactScreen,
+            path: RouterConfiguration.selectContactScreen,
+            builder: (BuildContext context, GoRouterState state) {
+              return const SelectContactsScreen();
             },
           ),
         ],
@@ -88,4 +97,5 @@ class RouterConfiguration {
   static String userInfoScreen = 'user_info';
   static String dashboardScreen = 'dashboard';
   static String loader = 'loader';
+  static String selectContactScreen = 'select_contact';
 }

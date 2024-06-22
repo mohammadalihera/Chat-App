@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:chatapp/config/router_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:chatapp/common/utils/colors.dart';
 import 'package:chatapp/common/utils/utils.dart';
 import 'package:chatapp/features/auth/controller/auth_controller.dart';
+import 'package:go_router/go_router.dart';
 
 class DashboardScreen extends ConsumerStatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -17,10 +19,11 @@ class DashboardScreen extends ConsumerStatefulWidget {
 class _MobileLayoutScreenState extends ConsumerState<DashboardScreen>
     with WidgetsBindingObserver, TickerProviderStateMixin {
   late TabController tabBarController;
+  int index = 0;
   @override
   void initState() {
     super.initState();
-    tabBarController = TabController(length: 3, vsync: this);
+    tabBarController = TabController(length: 2, vsync: this);
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -49,7 +52,7 @@ class _MobileLayoutScreenState extends ConsumerState<DashboardScreen>
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -73,10 +76,24 @@ class _MobileLayoutScreenState extends ConsumerState<DashboardScreen>
                 Icons.more_vert,
                 color: Colors.grey,
               ),
-              itemBuilder: (context) => [],
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: const Text(
+                    'Profile',
+                  ),
+                  onTap: () => Future(
+                    () => context.pushNamed(RouterConfiguration.userInfoScreen),
+                  ),
+                )
+              ],
             ),
           ],
           bottom: TabBar(
+            onTap: (value) {
+              setState(() {
+                index = value;
+              });
+            },
             controller: tabBarController,
             indicatorColor: tabColor,
             indicatorWeight: 4,
@@ -90,9 +107,6 @@ class _MobileLayoutScreenState extends ConsumerState<DashboardScreen>
                 text: 'CHATS',
               ),
               Tab(
-                text: 'STATUS',
-              ),
-              Tab(
                 text: 'CALLS',
               ),
             ],
@@ -100,8 +114,22 @@ class _MobileLayoutScreenState extends ConsumerState<DashboardScreen>
         ),
         body: TabBarView(
           controller: tabBarController,
-          children: const [Text('Calls')],
+          children: const [Text('Chat'), Text('Calls')],
         ),
+        floatingActionButton: index == 0
+            ? FloatingActionButton(
+                onPressed: () async {
+                  if (tabBarController.index == 0) {
+                    context.pushNamed(RouterConfiguration.selectContactScreen);
+                  }
+                },
+                backgroundColor: tabColor,
+                child: const Icon(
+                  Icons.comment,
+                  color: Colors.white,
+                ),
+              )
+            : null,
       ),
     );
   }
