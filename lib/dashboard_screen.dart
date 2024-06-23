@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chatapp/config/router_config.dart';
+import 'package:chatapp/features/chat/widgets/contacts_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -114,7 +115,7 @@ class _MobileLayoutScreenState extends ConsumerState<DashboardScreen>
         ),
         body: TabBarView(
           controller: tabBarController,
-          children: const [Text('Chat'), Text('Calls')],
+          children: const [ContactsList(), Text('Calls')],
         ),
         floatingActionButton: index == 0
             ? FloatingActionButton(
