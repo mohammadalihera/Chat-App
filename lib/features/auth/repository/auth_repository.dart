@@ -68,7 +68,17 @@ class AuthRepository {
         smsCode: userOTP,
       );
       await auth.signInWithCredential(credential);
-      context.pushReplacementNamed(RouterConfiguration.userInfoScreen);
+      context.goNamed(RouterConfiguration.userInfoScreen);
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context: context, content: e.message!);
+    }
+  }
+
+  void signOut(BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      showSnackBar(context: context, content: 'Signing Out');
+      context.goNamed(RouterConfiguration.initialScreen);
     } on FirebaseAuthException catch (e) {
       showSnackBar(context: context, content: e.message!);
     }

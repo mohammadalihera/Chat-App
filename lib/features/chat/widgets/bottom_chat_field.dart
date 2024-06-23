@@ -154,6 +154,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
           children: [
             Expanded(
               child: TextFormField(
+                style: const TextStyle(color: Colors.white),
                 focusNode: focusNode,
                 controller: _messageController,
                 onChanged: (val) {
@@ -168,25 +169,9 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                   }
                 },
                 decoration: InputDecoration(
+                  hintStyle: const TextStyle(color: Colors.white),
                   filled: true,
                   fillColor: mobileChatBoxColor,
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: SizedBox(
-                      width: 100,
-                      child: Row(
-                        children: [
-                          IconButton(
-                            onPressed: toggleEmojiKeyboardContainer,
-                            icon: const Icon(
-                              Icons.emoji_emotions,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                   suffixIcon: SizedBox(
                     width: 100,
                     child: Row(
@@ -196,14 +181,14 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                           onPressed: selectImage,
                           icon: const Icon(
                             Icons.camera_alt,
-                            color: Colors.grey,
+                            color: Colors.white,
                           ),
                         ),
                         IconButton(
                           onPressed: selectVideo,
                           icon: const Icon(
                             Icons.attach_file,
-                            color: Colors.grey,
+                            color: Colors.white,
                           ),
                         ),
                       ],

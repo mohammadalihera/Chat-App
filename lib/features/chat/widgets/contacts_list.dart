@@ -11,10 +11,12 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class ContactsList extends ConsumerWidget {
-  const ContactsList({Key? key}) : super(key: key);
+  ContactsList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    bool loading = false;
+
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: SingleChildScrollView(
@@ -24,7 +26,8 @@ class ContactsList extends ConsumerWidget {
                 stream: ref.watch(chatControllerProvider).chatGroups(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Loader();
+                    // return const Loader();
+                    return const SizedBox();
                   }
 
                   return ListView.builder(

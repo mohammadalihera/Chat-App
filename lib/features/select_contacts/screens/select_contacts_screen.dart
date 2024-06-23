@@ -16,20 +16,17 @@ class SelectContactsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Select contact'),
+        title: const Text(
+          'Select contact',
+          style: TextStyle(color: Colors.white),
+        ),
         actions: [
           IconButton(
             onPressed: () {},
             icon: const Icon(
               Icons.search,
             ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.more_vert,
-            ),
-          ),
+          )
         ],
       ),
       body: ref.watch(getContactsProvider).when(

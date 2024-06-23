@@ -51,6 +51,10 @@ class _MobileLayoutScreenState extends ConsumerState<DashboardScreen>
     }
   }
 
+  void signOut(WidgetRef ref, BuildContext context) {
+    ref.read(authControllerProvider).signOut(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -64,7 +68,7 @@ class _MobileLayoutScreenState extends ConsumerState<DashboardScreen>
               'Chat App',
               style: TextStyle(
                 fontSize: 20,
-                color: Colors.grey,
+                color: Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -72,7 +76,7 @@ class _MobileLayoutScreenState extends ConsumerState<DashboardScreen>
               PopupMenuButton(
                 icon: const Icon(
                   Icons.more_vert,
-                  color: Colors.grey,
+                  color: Colors.white,
                 ),
                 itemBuilder: (context) => [
                   PopupMenuItem(
@@ -90,12 +94,20 @@ class _MobileLayoutScreenState extends ConsumerState<DashboardScreen>
                     onTap: () => Future(
                       () => context.pushNamed(RouterConfiguration.createGroupScreen),
                     ),
+                  ),
+                  PopupMenuItem(
+                    child: const Text(
+                      'Logout',
+                    ),
+                    onTap: () => Future(
+                      () => signOut(ref, context),
+                    ),
                   )
                 ],
               ),
             ],
           ),
-          body: const ContactsList(),
+          body: ContactsList(),
           floatingActionButton: FloatingActionButton(
             onPressed: () async {
               context.pushNamed(RouterConfiguration.selectContactScreen);

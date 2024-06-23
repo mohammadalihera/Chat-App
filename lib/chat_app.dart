@@ -15,10 +15,15 @@ class ChatApp extends ConsumerWidget {
       title: 'Chat App',
       routerConfig: goRouter,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark().copyWith(
+      theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: backgroundColor,
         appBarTheme: const AppBarTheme(
           color: appBarColor,
+          iconTheme: IconThemeData(color: Colors.white),
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+          ),
         ),
       ),
     );

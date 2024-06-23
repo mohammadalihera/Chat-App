@@ -68,9 +68,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Enter your phone number'),
+        title: const Text('Login with your phone number'),
         elevation: 0,
-        backgroundColor: backgroundColor,
       ),
       body: SingleChildScrollView(
         child: Padding(

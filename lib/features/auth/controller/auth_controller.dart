@@ -41,6 +41,10 @@ class AuthController {
     );
   }
 
+  void signOut(BuildContext context) {
+    authRepository.signOut(context);
+  }
+
   void saveUserDataToFirebase(BuildContext context, String name, File? profilePic) {
     authRepository.saveUserDataToFirebase(
       name: name,
