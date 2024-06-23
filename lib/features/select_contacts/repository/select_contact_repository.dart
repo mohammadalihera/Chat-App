@@ -1,9 +1,11 @@
 import 'package:chatapp/common/utils/utils.dart';
+import 'package:chatapp/config/router_config.dart';
 import 'package:chatapp/models/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 final selectContactsRepositoryProvider = Provider(
   (ref) => SelectContactRepository(
@@ -37,12 +39,17 @@ class SelectContactRepository {
 
       for (var document in userCollection.docs) {
         var userData = UserModel.fromMap(document.data());
-        String selectedPhoneNum = selectedContact.phones[0].number.replaceAll(
+        String selectedPhoneNum = selectedContact.phones[0].normalizedNumber.replaceAll(
           ' ',
           '',
         );
         if (selectedPhoneNum == userData.phoneNumber) {
           isFound = true;
+          context.pushNamed(
+            RouterConfiguration.chatScreen,
+            extra: {'name': userData.name, 'uid': userData.uid},
+          );
+          return;
         }
       }
       if (!isFound) {
