@@ -1,4 +1,6 @@
 import 'package:chatapp/features/chat/screens/mobile_chat_screen.dart';
+import 'package:chatapp/features/group/screens/create_group_screen.dart';
+import 'package:chatapp/features/profile/screens/profile_screen.dart';
 import 'package:chatapp/features/select_contacts/screens/select_contacts_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -97,6 +99,20 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               );
             },
           ),
+          GoRoute(
+            name: RouterConfiguration.createGroupScreen,
+            path: RouterConfiguration.createGroupScreen,
+            builder: (BuildContext context, GoRouterState state) {
+              return const CreateGroupScreen();
+            },
+          ),
+          GoRoute(
+            name: RouterConfiguration.userProfileScreen,
+            path: RouterConfiguration.userProfileScreen,
+            builder: (BuildContext context, GoRouterState state) {
+              return const UserProfileScreen();
+            },
+          ),
         ],
       ),
     ],
@@ -117,4 +133,6 @@ class RouterConfiguration {
   static String loader = 'loader';
   static String selectContactScreen = 'select_contact';
   static String chatScreen = 'chat';
+  static String createGroupScreen = 'create_group';
+  static String userProfileScreen = 'user_profile';
 }

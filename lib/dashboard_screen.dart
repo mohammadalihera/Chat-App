@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:chatapp/config/router_config.dart';
 import 'package:chatapp/features/chat/widgets/contacts_list.dart';
+import 'package:chatapp/features/group/screens/create_group_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,7 +25,7 @@ class _MobileLayoutScreenState extends ConsumerState<DashboardScreen>
   @override
   void initState() {
     super.initState();
-    tabBarController = TabController(length: 2, vsync: this);
+    tabBarController = TabController(length: 1, vsync: this);
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -55,83 +56,56 @@ class _MobileLayoutScreenState extends ConsumerState<DashboardScreen>
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: appBarColor,
-          centerTitle: false,
-          title: const Text(
-            'Chat App',
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.grey,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.search, color: Colors.grey),
-              onPressed: () {},
-            ),
-            PopupMenuButton(
-              icon: const Icon(
-                Icons.more_vert,
+          appBar: AppBar(
+            elevation: 0,
+            backgroundColor: appBarColor,
+            centerTitle: false,
+            title: const Text(
+              'Chat App',
+              style: TextStyle(
+                fontSize: 20,
                 color: Colors.grey,
+                fontWeight: FontWeight.bold,
               ),
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  child: const Text(
-                    'Profile',
-                  ),
-                  onTap: () => Future(
-                    () => context.pushNamed(RouterConfiguration.userInfoScreen),
-                  ),
-                )
-              ],
             ),
-          ],
-          bottom: TabBar(
-            onTap: (value) {
-              setState(() {
-                index = value;
-              });
-            },
-            controller: tabBarController,
-            indicatorColor: tabColor,
-            indicatorWeight: 4,
-            labelColor: tabColor,
-            unselectedLabelColor: Colors.grey,
-            labelStyle: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
-            tabs: const [
-              Tab(
-                text: 'CHATS',
-              ),
-              Tab(
-                text: 'CALLS',
+            actions: [
+              PopupMenuButton(
+                icon: const Icon(
+                  Icons.more_vert,
+                  color: Colors.grey,
+                ),
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    child: const Text(
+                      'Profile',
+                    ),
+                    onTap: () => Future(
+                      () => context.pushNamed(RouterConfiguration.userProfileScreen),
+                    ),
+                  ),
+                  PopupMenuItem(
+                    child: const Text(
+                      'Create Group',
+                    ),
+                    onTap: () => Future(
+                      () => context.pushNamed(RouterConfiguration.createGroupScreen),
+                    ),
+                  )
+                ],
               ),
             ],
           ),
-        ),
-        body: TabBarView(
-          controller: tabBarController,
-          children: const [ContactsList(), Text('Calls')],
-        ),
-        floatingActionButton: index == 0
-            ? FloatingActionButton(
-                onPressed: () async {
-                  if (tabBarController.index == 0) {
-                    context.pushNamed(RouterConfiguration.selectContactScreen);
-                  }
-                },
-                backgroundColor: tabColor,
-                child: const Icon(
-                  Icons.comment,
-                  color: Colors.white,
-                ),
-              )
-            : null,
-      ),
+          body: const ContactsList(),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () async {
+              context.pushNamed(RouterConfiguration.selectContactScreen);
+            },
+            backgroundColor: tabColor,
+            child: const Icon(
+              Icons.comment,
+              color: Colors.white,
+            ),
+          )),
     );
   }
 }
