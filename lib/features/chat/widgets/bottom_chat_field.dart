@@ -1,23 +1,24 @@
 import 'dart:io';
 
-import 'package:chatapp/common/enums/message_enum.dart';
-import 'package:chatapp/common/providers/message_reply_provider.dart';
-import 'package:chatapp/common/utils/colors.dart';
-import 'package:chatapp/common/utils/utils.dart';
-import 'package:chatapp/features/chat/controller/chat_controller.dart';
-import 'package:chatapp/features/chat/widgets/message_reply_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'package:chatapp/common/enums/message_enum.dart';
+import 'package:chatapp/common/providers/message_reply_provider.dart';
+import 'package:chatapp/common/utils/colors.dart';
+import 'package:chatapp/common/utils/utils.dart';
+import 'package:chatapp/features/chat/controller/chat_controller.dart';
+import 'package:chatapp/features/chat/widgets/message_reply_preview.dart';
+
 class BottomChatField extends ConsumerStatefulWidget {
-  final String recieverUserId;
+  final String receiverUserId;
   final bool isGroupChat;
   const BottomChatField({
     Key? key,
-    required this.recieverUserId,
+    required this.receiverUserId,
     required this.isGroupChat,
   }) : super(key: key);
 
@@ -55,7 +56,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
       ref.read(chatControllerProvider).sendTextMessage(
             context,
             _messageController.text.trim(),
-            widget.recieverUserId,
+            widget.receiverUserId,
             widget.isGroupChat,
           );
       setState(() {
@@ -89,7 +90,7 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
     ref.read(chatControllerProvider).sendFileMessage(
           context,
           file,
-          widget.recieverUserId,
+          widget.receiverUserId,
           messageEnum,
           widget.isGroupChat,
         );
@@ -108,18 +109,6 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
       sendFileMessage(video, MessageEnum.video);
     }
   }
-
-  // void selectGIF() async {
-  //   final gif = await pickGIF(context);
-  //   if (gif != null) {
-  //     ref.read(chatControllerProvider).sendGIFMessage(
-  //           context,
-  //           gif.url,
-  //           widget.recieverUserId,
-  //           widget.isGroupChat,
-  //         );
-  //   }
-  // }
 
   void hideEmojiContainer() {
     setState(() {
@@ -194,13 +183,6 @@ class _BottomChatFieldState extends ConsumerState<BottomChatField> {
                               color: Colors.grey,
                             ),
                           ),
-                          // IconButton(
-                          //   onPressed: selectGIF,
-                          //   icon: const Icon(
-                          //     Icons.gif,
-                          //     color: Colors.grey,
-                          //   ),
-                          // ),
                         ],
                       ),
                     ),
