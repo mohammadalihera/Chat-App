@@ -79,14 +79,14 @@ class _MobileLayoutScreenState extends ConsumerState<DashboardScreen>
                   color: Colors.white,
                 ),
                 itemBuilder: (context) => [
-                  PopupMenuItem(
-                    child: const Text(
-                      'Profile',
-                    ),
-                    onTap: () => Future(
-                      () => context.pushNamed(RouterConfiguration.userProfileScreen),
-                    ),
-                  ),
+                  // PopupMenuItem(
+                  //   child: const Text(
+                  //     'Profile',
+                  //   ),
+                  //   onTap: () => Future(
+                  //     () => context.pushNamed(RouterConfiguration.userProfileScreen),
+                  //   ),
+                  // ),
                   PopupMenuItem(
                     child: const Text(
                       'Create Group',

@@ -79,7 +79,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             name: RouterConfiguration.selectContactScreen,
             path: RouterConfiguration.selectContactScreen,
             builder: (BuildContext context, GoRouterState state) {
-              return const SelectContactsScreen();
+              return SelectContactsScreen();
             },
           ),
           GoRoute(

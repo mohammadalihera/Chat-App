@@ -4,6 +4,7 @@ class UserModel {
   final String profilePic;
   final bool isOnline;
   final String phoneNumber;
+  final String fcmToken;
   final List<String> groupId;
   UserModel({
     required this.name,
@@ -12,6 +13,7 @@ class UserModel {
     required this.isOnline,
     required this.phoneNumber,
     required this.groupId,
+    required this.fcmToken,
   });
 
   Map<String, dynamic> toMap() {
@@ -22,6 +24,7 @@ class UserModel {
       'isOnline': isOnline,
       'phoneNumber': phoneNumber,
       'groupId': groupId,
+      'fcmToken': fcmToken,
     };
   }
 
@@ -32,6 +35,7 @@ class UserModel {
       profilePic: map['profilePic'] ?? '',
       isOnline: map['isOnline'] ?? false,
       phoneNumber: map['phoneNumber'] ?? '',
+      fcmToken: map['fcmToken'] ?? '',
       groupId: List<String>.from(map['groupId']),
     );
   }
