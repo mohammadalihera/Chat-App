@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:chatapp/common/repositories/commont_firebase_storage_repository.dart';
 import 'package:chatapp/models/user_model.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -78,7 +79,7 @@ class AuthRepository {
     try {
       await FirebaseAuth.instance.signOut();
       showSnackBar(context: context, content: 'Signing Out');
-      context.goNamed(RouterConfiguration.loginScreen);
+      context.pushReplacementNamed(RouterConfiguration.loginScreen);
     } on FirebaseAuthException catch (e) {
       showSnackBar(context: context, content: e.message!);
     }
@@ -102,6 +103,8 @@ class AuthRepository {
             );
       }
 
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+
       var user = UserModel(
         name: name,
         uid: uid,
@@ -109,10 +112,11 @@ class AuthRepository {
         isOnline: true,
         phoneNumber: auth.currentUser!.phoneNumber!,
         groupId: [],
+        fcmToken: fcmToken ?? '',
       );
 
       await firestore.collection('users').doc(uid).set(user.toMap());
-      context.pushReplacementNamed(RouterConfiguration.dashboardScreen);
+      context.goNamed(RouterConfiguration.dashboardScreen);
     } catch (e) {
       showSnackBar(context: context, content: e.toString());
     }

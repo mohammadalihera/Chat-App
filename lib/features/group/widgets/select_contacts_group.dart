@@ -46,6 +46,7 @@ class _SelectContactsGroupState extends ConsumerState<SelectContactsGroup> {
                             fontSize: 18,
                           ),
                         ),
+                        subtitle: Text(contact.phones[0].normalizedNumber),
                         leading: selectedContactsIndex.contains(index)
                             ? IconButton(
                                 onPressed: () {},

@@ -11,12 +11,9 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class ContactsList extends ConsumerWidget {
-  ContactsList({Key? key}) : super(key: key);
-
+  const ContactsList({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    bool loading = false;
-
     return Padding(
       padding: const EdgeInsets.only(top: 10.0),
       child: SingleChildScrollView(
@@ -26,10 +23,8 @@ class ContactsList extends ConsumerWidget {
                 stream: ref.watch(chatControllerProvider).chatGroups(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    // return const Loader();
                     return const SizedBox();
                   }
-
                   return ListView.builder(
                     shrinkWrap: true,
                     itemCount: snapshot.data!.length,
@@ -92,62 +87,65 @@ class ContactsList extends ConsumerWidget {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Loader();
                   }
+                  return snapshot.data!.isEmpty
+                      ? const Center(
+                          child: Text('You have no single chat'),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            var chatContactData = snapshot.data![index];
 
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      var chatContactData = snapshot.data![index];
-
-                      return Column(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              final sender = {
-                                'name': chatContactData.name,
-                                'uid': chatContactData.contactId,
-                                'isGroupChat': false,
-                                'profilePic': chatContactData.profilePic,
-                              };
-                              context.pushNamed(RouterConfiguration.chatScreen, extra: sender);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: ListTile(
-                                title: Text(
-                                  chatContactData.name,
-                                  style: const TextStyle(
-                                    fontSize: 18,
+                            return Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    final sender = {
+                                      'name': chatContactData.name,
+                                      'uid': chatContactData.contactId,
+                                      'isGroupChat': false,
+                                      'profilePic': chatContactData.profilePic,
+                                    };
+                                    context.pushNamed(RouterConfiguration.chatScreen, extra: sender);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: ListTile(
+                                      title: Text(
+                                        chatContactData.name,
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                      subtitle: Padding(
+                                        padding: const EdgeInsets.only(top: 6.0),
+                                        child: Text(
+                                          chatContactData.lastMessage,
+                                          style: const TextStyle(fontSize: 15),
+                                        ),
+                                      ),
+                                      leading: CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                          chatContactData.profilePic,
+                                        ),
+                                        radius: 30,
+                                      ),
+                                      trailing: Text(
+                                        DateFormat.Hm().format(chatContactData.timeSent),
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 13,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                                subtitle: Padding(
-                                  padding: const EdgeInsets.only(top: 6.0),
-                                  child: Text(
-                                    chatContactData.lastMessage,
-                                    style: const TextStyle(fontSize: 15),
-                                  ),
-                                ),
-                                leading: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                    chatContactData.profilePic,
-                                  ),
-                                  radius: 30,
-                                ),
-                                trailing: Text(
-                                  DateFormat.Hm().format(chatContactData.timeSent),
-                                  style: const TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Divider(color: dividerColor, indent: 85),
-                        ],
-                      );
-                    },
-                  );
+                                const Divider(color: dividerColor, indent: 85),
+                              ],
+                            );
+                          },
+                        );
                 }),
           ],
         ),
