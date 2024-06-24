@@ -78,7 +78,7 @@ class AuthRepository {
     try {
       await FirebaseAuth.instance.signOut();
       showSnackBar(context: context, content: 'Signing Out');
-      context.goNamed(RouterConfiguration.initialScreen);
+      context.goNamed(RouterConfiguration.loginScreen);
     } on FirebaseAuthException catch (e) {
       showSnackBar(context: context, content: e.message!);
     }
